@@ -27,6 +27,7 @@ public class RegistrationServlet extends HttpServlet {
             String f = request.getParameter("email");
             String g = request.getParameter("pass");
             String h = request.getParameter("mno");
+            String password=SHA.getSHA512(g);
 
             String query = "insert into users(fname,lname,country,bdate,gender,email,password,phone_no) values (?,?,?,?,?,?,?,?)";
 
@@ -38,7 +39,7 @@ public class RegistrationServlet extends HttpServlet {
                 ps.setString(4, d);
                 ps.setString(5, e);
                 ps.setString(6, f);
-                ps.setString(7, g);
+                ps.setString(7, password);
                 ps.setString(8, h);
 
                 int rows_inserted = ps.executeUpdate();

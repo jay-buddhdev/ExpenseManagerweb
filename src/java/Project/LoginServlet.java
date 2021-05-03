@@ -1,11 +1,15 @@
 package Project;
 
 import java.io.*;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.sql.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class LoginServlet extends HttpServlet {
+    
+    
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -25,13 +29,14 @@ public class LoginServlet extends HttpServlet {
 
             String a = request.getParameter("email_id");
             String b = request.getParameter("password");
+            String password=SHA.getSHA512(b);
 
             String query = " select uid,email,password from users where email=? and password=?";
 
             try {
                 ps = con.prepareStatement(query);
                 ps.setString(1, a);
-                ps.setString(2, b);
+                ps.setString(2, password);
                 rs = ps.executeQuery();
 
                 String id = null;
